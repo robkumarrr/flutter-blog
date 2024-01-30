@@ -1,16 +1,10 @@
-# hello_world
+# Flutter Blog
 
-A new Flutter project.
+This is my first time using flutter and with the assistance of various walkthroughs and documentation I have started to put together a simple blog app.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Currently, this is a work-in-progress but I am thoroughly enjoying the process so far.
+I plan to connect the app to a database to create a more comprehensive overall project.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Thanks for reading! Check back periodically for more updates on this project.
