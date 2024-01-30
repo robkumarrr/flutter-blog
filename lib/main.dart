@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Rob's App",
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.deepOrange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: false,
       ),
@@ -22,43 +22,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar( title: const Text("First Flutter App")),
-      body: const TextInputWidget()
-      );
-  }
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-// Takes constructor arguments and the override for the state
-class TextInputWidget extends StatefulWidget {
-  const TextInputWidget({super.key});
-
-  @override
-  State<TextInputWidget> createState() => _TextInputWidgetState();
-}
-
-// Handles state and rendering
-class _TextInputWidgetState extends State<TextInputWidget> {
-  final controller = TextEditingController();
+class _MyHomePageState extends State<MyHomePage> {
   String textVar = "";
 
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
-  void changeText(text) {
-    if (text == "Hello World!") {
-      controller.clear();
-      text = "ooga booga";
-    }
-
+  void changeText(String text) {
     setState(() {
       textVar = text;  
     });
@@ -66,14 +40,50 @@ class _TextInputWidgetState extends State<TextInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      TextField(
+    return Scaffold(
+        appBar: AppBar( title: const Text("First Flutter App")),
+        body: Column(children: <Widget>[
+          TextInputWidget(changeText), 
+          Text(textVar)
+        ]));
+    }
+}
+
+// Takes constructor arguments and the override for the state
+class TextInputWidget extends StatefulWidget {
+  final Function(String) callback;
+  const TextInputWidget(this.callback, {super.key});
+  @override
+  State<TextInputWidget> createState() => _TextInputWidgetState();
+}
+
+// Handles state and rendering
+class _TextInputWidgetState extends State<TextInputWidget> {
+  final controller = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  void click() {
+    widget.callback(controller.text);
+    controller.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
         controller: controller,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.message), labelText: "Type a message: "),
-        onChanged: (textVar) => changeText(textVar)
-      ),
-      Text(textVar)
-    ]);
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.message), 
+          labelText: "Type a message: ",
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.send), 
+            splashColor: Colors.orangeAccent,
+            tooltip: "Post message",
+            onPressed: click,
+          )));
   }
 }
